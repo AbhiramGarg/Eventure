@@ -5,7 +5,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
-export default function HomeScreen() {
+export default function eventsScreen() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -16,9 +16,10 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Yo whats good!</ThemedText>
+        <ThemedText type="title">My events</ThemedText>
         <HelloWave />
       </ThemedView>
+      <ThemedView style={styles.container}>
       <ThemedView style={styles.stepContainer}>
         <ThemedText style={styles.subtitleContainer} type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText style={styles.paratext}>
@@ -46,6 +47,8 @@ export default function HomeScreen() {
           <ThemedText style={styles.paratext} type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
+
+      </ThemedView>
     </ParallaxScrollView>
   );
 }
@@ -72,5 +75,8 @@ const styles = StyleSheet.create({
   },
   paratext:{
     color:'#96c5d6'
+  },
+  container:{
+    paddingBottom: 70
   }
 });
