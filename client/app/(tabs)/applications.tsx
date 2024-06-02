@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Events() {
+export default function Applications() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Events Screen</Text>
+      <Text style={styles.text}>Applications Screen</Text>
     </View>
   );
 }

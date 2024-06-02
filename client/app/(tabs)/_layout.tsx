@@ -16,7 +16,6 @@ export default function TabLayout() {
 
   return (
     <Tabs
-     initialRouteName="feed"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         tabBarStyle: {
@@ -35,7 +34,7 @@ export default function TabLayout() {
         tabBarShowLabel: false,
       }}>
       <Tabs.Screen
-        name="feed"
+        name="index"
         options={{
           title: 'Feed',
           tabBarIcon: ({ color, focused }) => (
@@ -44,15 +43,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="post"
+        name="applications"
         options={
           userType === 'org' ? {
             tabBarButton: () => null
           } :
           {
-          title: 'Post',
+          title: 'Applications',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'add-circle-outline' : 'add-circle-outline'} color={color} />
+            <TabBarIcon name={focused ? 'albums-outline' : 'albums-outline'} color={color} />
           ),
         }
       }
@@ -64,7 +63,7 @@ export default function TabLayout() {
             tabBarButton: () => null
           } :
           {
-          title: 'Events',
+          title: 'My Events',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'albums-outline' : 'albums-outline'} color={color} />
           ),
