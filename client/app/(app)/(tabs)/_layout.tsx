@@ -17,7 +17,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: '#FFFFFF', // White color for icons
         tabBarStyle: {
           position: 'absolute',
           bottom: 20,
@@ -25,7 +25,7 @@ export default function TabLayout() {
           right: 20,
           height: tabBarHeight,
           borderRadius: 50,
-          backgroundColor: Colors[colorScheme ?? 'light'].tabBarBackground,
+          backgroundColor: 'rgba(51, 51, 51, 1)', // Dark grey color with 70% opacity
           zIndex: 12,
           elevation: 0, 
           shadowOpacity: 0, 
