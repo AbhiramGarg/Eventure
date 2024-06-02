@@ -1,99 +1,139 @@
-import React from 'react';
-import { View,Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, LayoutAnimation, UIManager, Platform, Button, Image } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { useAuth } from '@/context/auth';
+const eventsData = [
+  { id: 1, name: 'Event 1', venue: 'Venue 1', time: 'Time 1', organizer: 'Organizer 1', description: 'Description 1', requirements: 'Progressive rock band' },
+  { id: 2, name: 'Event 2', venue: 'Venue 2', time: 'Time 2', organizer: 'Organizer 2', description: 'Description 1', requirements: 'Classical singer' },
+  { id: 3, name: 'Event 3', venue: 'Venue 3', time: 'Time 3', organizer: 'Organizer 3', description: 'Description 1', requirements: 'Pianist' },
+  { id: 4, name: 'Event 4', venue: 'Venue 4', time: 'Time 4', organizer: 'Organizer 4', description: 'Description 1', requirements: 'requirements' },
+  { id: 5, name: 'Event 5', venue: 'Venue 5', time: 'Time 5', organizer: 'Organizer 5', description: 'Description 1', requirements: 'requirements' },
+  { id: 6, name: 'Event 6', venue: 'Venue 6', time: 'Time 6', organizer: 'Organizer 6', description: 'Description 1', requirements: 'requirements' },
+  { id: 7, name: 'Event 7', venue: 'Venue 7', time: 'Time 7', organizer: 'Organizer 7', description: 'Description 1', requirements: 'requirements' },
+  { id: 8, name: 'Event 8', venue: 'Venue 8', time: 'Time 8', organizer: 'Organizer 8', description: 'Description 1', requirements: 'requirements' },
+];
 
-export default function HomeScreen() {
-  const handleLogout = () => {
-    // Implement logout logic here
-    console.log('Logged out');
-    signOut()
+if (Platform.OS === 'android') {
+  UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+const getUserType = () => {
+  return 'org'; 
+};
+
+export default function Feed() {
+  const [expandedEventId, setExpandedEventId] = useState(null);
+  const userType = getUserType();
+
+  const toggleExpand = (eventId: any) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpandedEventId(expandedEventId === eventId ? null : eventId);
   };
-  const {signOut} = useAuth()
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <View style={styles.headerContainer}>
-          <Image
-            source={require('@/assets/images/gojowp.png')}
-            style={styles.reactLogo}
-          />
-          <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-            <ThemedText style={styles.logoutText}>Logout</ThemedText>
+    <View style={styles.container}>
+      <Text style={styles.heading}>Upcoming Events</Text>
+      <ScrollView style={styles.eventContainer}>
+        {eventsData.map((event) => (
+          <TouchableOpacity
+            key={event.id}
+            onPress={() => toggleExpand(event.id)}
+            activeOpacity={0.8}
+          >
+            <View style={[styles.event, expandedEventId === event.id && styles.expandedEvent]}>
+              <View style={styles.eventHeader}>
+                <View>
+                  <Text style={styles.eventName}>{event.name}</Text>
+                  <Text style={styles.eventVenue}>{event.venue}</Text>
+                  <Text style={styles.eventTime}>{event.time}</Text>
+                  <Text style={styles.eventOrganizer}>{event.organizer}</Text>
+                </View>
+                <View style={styles.eventRight}>
+                  {userType === 'org' ? (
+                    <Image source={require('../../assets/images/adaptive-icon.png')} style={{ width: 70, height: 70 }} />
+                  ) : (
+                    <Button title="Apply" onPress={() => alert('Apply clicked!')} />
+                  )}
+                </View>
+              </View>
+              {expandedEventId === event.id && (
+                <View>
+                  <Text style={styles.eventHeading}>Description</Text>
+                  <Text style={styles.eventDescription}>{event.description}</Text>
+                  <Text style={styles.eventHeading}>Requirements</Text>
+                  <Text style={styles.eventDescription}>{event.requirements}</Text>
+                </View>
+              )}
+            </View>
           </TouchableOpacity>
-        </View>
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Yo whats good!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText style={styles.subtitleContainer} type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText style={styles.paratext}>
-          Edit <ThemedText style={styles.paratext} type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText style={styles.paratext} type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText style={styles.subtitleContainer} type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText style={styles.paratext}>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText style={styles.subtitleContainer} type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText style={styles.paratext} >
-          When you're ready, run{' '}
-          <ThemedText style={styles.paratext} type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText style={styles.paratext} type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText style={styles.paratext} type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText style={styles.paratext} type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        ))}
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    position: 'relative',
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 75,
   },
-  logoutButton: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
-    zIndex: 999,
-  },  
-  logoutText: {
-    fontSize: 16,
-    color: 'white',
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
-  titleContainer: {
+  eventContainer: {
+    flex: 1,
+    marginBottom: 20,
+  },
+  event: {
+    backgroundColor: '#e0e0e0',
+    width: '100%',
+    padding: 20,
+    marginVertical: 10,
+    borderRadius: 10,
+  },
+  expandedEvent: {
+    height: 'auto',
+  },
+  eventHeader: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  eventRight: {
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  eventName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
   },
-  reactLogo: {
-    height: 258,
-    width: 390,
+  eventVenue: {
+    fontSize: 16,
+    marginBottom: 5,
   },
-  subtitleContainer:{
-    color:'#1eb4eb'
+  eventTime: {
+    fontSize: 16,
+    marginBottom: 5,
   },
-  paratext:{
-    color:'#96c5d6'
-  }
+  eventOrganizer: {
+    fontSize: 16,
+  },
+  organizer: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  eventHeading: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  eventDescription: {
+    fontSize: 16,
+    marginTop: 10,
+  },
 });
