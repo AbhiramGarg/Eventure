@@ -7,10 +7,9 @@ export default function SignupScreen() {
   const [email, setEmail] = useState('');
   const [artistName, setArtistName] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('artist'); // Default role is "artist"
+  const [role, setRole] = useState('artist'); 
 
   const handleSignup = () => {
-    // Implement signup logic here
     console.log('Email:', email);
     console.log('Password:', password);
     console.log('Role:', role);
@@ -20,7 +19,7 @@ export default function SignupScreen() {
   const { signIn } = useAuth();
   const router = useRouter();
 
-  const handleRoleChange = (selectedRole) => {
+  const handleRoleChange = (selectedRole: React.SetStateAction<string>) => {
     setRole(selectedRole);
   };
 

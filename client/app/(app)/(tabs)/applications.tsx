@@ -22,7 +22,7 @@ export default function Feed() {
   const [expandedEventId, setExpandedEventId] = useState(null);
   const userType = getUserType();
 
-  const toggleExpand = (eventId) => {
+  const toggleExpand = (eventId: any) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setExpandedEventId(expandedEventId === eventId ? null : eventId);
   };
@@ -59,7 +59,7 @@ export default function Feed() {
                 {event.artist && (
                   <View style={styles.eventRow}>
                     <Icon name="mic" size={20} color="#000" />
-                    <Text style={styles.eventArtist}>{event.artist}</Text>
+                    <Text style={styles.eventOrganizer}>{event.artist}</Text>
                   </View>
                 )}
               </View>

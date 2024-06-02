@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, LayoutAnimation, UIManager, Platform, Button, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -20,13 +21,14 @@ const getUserType = () => {
 export default function Feed() {
   const [expandedEventId, setExpandedEventId] = useState(null);
   const userType = getUserType();
+  const router = useRouter();
 
-  const toggleExpand = (eventId) => {
+  const toggleExpand = (eventId: any) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setExpandedEventId(expandedEventId === eventId ? null : eventId);
   };
 
-  const applyForEvent = (eventId, artistName) => {
+  const applyForEvent = (eventId: number, artistName: string) => {
     const updatedEvents = eventsData.map(event => {
       if (event.id === eventId) {
         return { ...event, artist: artistName };
@@ -68,14 +70,16 @@ export default function Feed() {
                 {event.artist && (
                   <View style={styles.eventRow}>
                     <Icon name="mic" size={20} color="#000" />
-                    <Text style={styles.eventArtist}>{event.artist}</Text>
+                    <Text style={styles.eventOrganizer}>{event.artist}</Text>
                   </View>
                 )}
                 
                 {event.applications && <View>
                   <Text style={styles.eventHeading}>Applications</Text>
                   {event.applications.map((artistName, index) => (
-                  <Button key={index} title={artistName} onPress={() => applyForEvent(event.id, artistName)} />
+                  <Button key={index} title={artistName} onPress={() => {
+                    router.replace('/profile?userId=1234&isOrg=false');
+                  }} />
                 ))}  
                 </View>}
               </View>
