@@ -1,19 +1,32 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React from 'react';
+import { View,Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useAuth } from '@/context/auth';
 
 export default function HomeScreen() {
+  const handleLogout = () => {
+    // Implement logout logic here
+    console.log('Logged out');
+    signOut()
+  };
+  const {signOut} = useAuth()
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
-        <Image
-          source={require('@/assets/images/gojowp.png')}
-          style={styles.reactLogo}
-        />
+        <View style={styles.headerContainer}>
+          <Image
+            source={require('@/assets/images/gojowp.png')}
+            style={styles.reactLogo}
+          />
+          <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+            <ThemedText style={styles.logoutText}>Logout</ThemedText>
+          </TouchableOpacity>
+        </View>
       }>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Yo whats good!</ThemedText>
@@ -51,6 +64,19 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    position: 'relative',
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    zIndex: 999,
+  },  
+  logoutText: {
+    fontSize: 16,
+    color: 'white',
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -63,9 +89,6 @@ const styles = StyleSheet.create({
   reactLogo: {
     height: 258,
     width: 390,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
   },
   subtitleContainer:{
     color:'#1eb4eb'
