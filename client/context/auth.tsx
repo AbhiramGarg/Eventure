@@ -8,13 +8,12 @@ export function useAuth() {
     return React.useContext(AuthContext)
 }
 
-
-
 export function AuthProvider({ children }: React.PropsWithChildren<{}>) {
     
     const rootSegment = useSegments()[0];
     const router = useRouter()
-    const [user, setUser] = React.useState<string|undefined>("");
+    const [user, setUser] = React.useState<any|undefined>("");
+
     React.useEffect(() => {
         if (user === undefined) return;
 
@@ -25,12 +24,13 @@ export function AuthProvider({ children }: React.PropsWithChildren<{}>) {
             router.replace("/")
         }
     },[user,rootSegment])
+
     return (
         <AuthContext.Provider
             value={{
                 user: user,
                 signIn:() => {
-                    setUser("hero")
+                    setUser("user")
                 },
                 signOut:() => {
                     setUser("")

@@ -1,23 +1,28 @@
+
 import { Tabs } from 'expo-router';
 import React from 'react';
+
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
+
 const getUserType = () => {
-  return 'org'; 
+  return 'org';
 };
+
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const tabBarHeight = 65;
   const userType = getUserType();
 
+
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#FFFFFF', // White color for icons
+        tabBarActiveTintColor: "#fff",
         tabBarStyle: {
           position: 'absolute',
           bottom: 20,
@@ -25,10 +30,10 @@ export default function TabLayout() {
           right: 20,
           height: tabBarHeight,
           borderRadius: 50,
-          backgroundColor: 'rgba(51, 51, 51, 1)', // Dark grey color with 70% opacity
+          backgroundColor: "rgba(51,51,51,1)",
           zIndex: 12,
-          elevation: 0, 
-          shadowOpacity: 0, 
+          elevation: 0,
+          shadowOpacity: 0,
         },
         headerShown: false,
         tabBarShowLabel: false,
@@ -72,6 +77,12 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="profile"
+        options={{
+          tabBarButton: () => null,
+        }}
+      />
+      <Tabs.Screen
+        name="editProfile"
         options={{
           title: 'Profile',
           tabBarIcon: ({ color, focused }) => (

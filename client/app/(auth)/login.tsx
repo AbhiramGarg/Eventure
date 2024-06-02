@@ -4,15 +4,13 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState('');
+  const [uname, setUname] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Implement login logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
-    signIn();
+    signIn("");
   };
+  
 
   const { signIn } = useAuth();
   const router = useRouter();
@@ -25,8 +23,8 @@ export default function LoginScreen() {
           style={styles.input}
           placeholderTextColor="white" // Placeholder text color
           placeholder="Email"
-          value={email}
-          onChangeText={text => setEmail(text)}
+          value={uname}
+          onChangeText={text => setUname(text)}
         />
         <TextInput
           style={styles.input}
