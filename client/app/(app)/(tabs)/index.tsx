@@ -49,7 +49,7 @@ export default function Feed() {
                 </View>
                 <View style={styles.eventRight}>
                   {userType === 'org' ? (
-                    <Image source={require('../../assets/images/adaptive-icon.png')} style={{ width: 70, height: 70 }} />
+                    <Image source={require('../../../assets/images/adaptive-icon.png')} style={{ width: 70, height: 70 }} />
                   ) : (
                     <Button title="Apply" onPress={() => alert('Apply clicked!')} />
                   )}
